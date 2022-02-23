@@ -1,6 +1,6 @@
 {
   "name": "react-native-styled-datepicker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Styled React Native Datepicker",
   "main": "src/index.js",
   "scripts": {
