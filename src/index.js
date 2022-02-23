@@ -31,6 +31,7 @@ import { getDateInfo, getInitialDate, getYearArray, dateProp } from "./func";
  * @param {String} disabledDateColor - color of a disabled date text
  * @param {String} selectedDateColor - color of a selected date text
  * @param {String} fontFamily - font family to apply for all text inside the calendar
+ * @param {Function} onChange - callback to execute when the selected date changed
  * @returns Bottomsheet for the date selection
  */
 const DatePicker = ({
@@ -56,6 +57,7 @@ const DatePicker = ({
   validWeekDateStyles = {},
   disabledDateStyles = {},
   fontFamily,
+  onChange,
 }) => {
   const [selectedDate, setSelectedDate] = useState(initialSelectedDate || moment().format("YYYY-MM-DD"));
   const [isMonthView, setMonthView] = useState(false);
@@ -80,6 +82,11 @@ const DatePicker = ({
   const sharedTextStyles = {
     fontFamily,
   };
+
+  onChangeSelectedDate = (date) => {
+    onChange?.(date)
+    setSelectedDate(date)
+  }
 
   const toggleMonthView = () => {
     if (isMonthView) {
@@ -198,7 +205,7 @@ const DatePicker = ({
       <TouchableOpacity
         disabled={state === CALENDAR_STATES.DISABLED}
         onPress={() => {
-          setSelectedDate(date.dateString);
+          onChangeSelectedDate(date.dateString);
         }}
         style={calendarDayContainerStyle(date, state)}
       >
@@ -272,26 +279,26 @@ const DatePicker = ({
     }
     if (maxMoment && minMoment) {
       if (newSelectedMoment.isBefore(minMoment)) {
-        setSelectedDate(minMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(minMoment.format("YYYY-MM-DD"));
       } else if (newSelectedMoment.isAfter(maxMoment)) {
-        setSelectedDate(maxMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(maxMoment.format("YYYY-MM-DD"));
       } else {
-        setSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
       }
     } else if (maxMoment) {
       if (newSelectedMoment.isAfter(maxMoment)) {
-        setSelectedDate(maxMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(maxMoment.format("YYYY-MM-DD"));
       } else {
-        setSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
       }
     } else if (minMoment) {
       if (newSelectedMoment.isBefore(minMoment)) {
-        setSelectedDate(minMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(minMoment.format("YYYY-MM-DD"));
       } else {
-        setSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
       }
     } else {
-      setSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+      onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
     }
 
     toggleMonthView();
@@ -305,26 +312,26 @@ const DatePicker = ({
     }
     if (maxMoment && minMoment) {
       if (newSelectedMoment.isBefore(minMoment)) {
-        setSelectedDate(minMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(minMoment.format("YYYY-MM-DD"));
       } else if (newSelectedMoment.isAfter(maxMoment)) {
-        setSelectedDate(maxMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(maxMoment.format("YYYY-MM-DD"));
       } else {
-        setSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
       }
     } else if (maxMoment) {
       if (newSelectedMoment.isAfter(maxMoment)) {
-        setSelectedDate(maxMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(maxMoment.format("YYYY-MM-DD"));
       } else {
-        setSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
       }
     } else if (minMoment) {
       if (newSelectedMoment.isBefore(minMoment)) {
-        setSelectedDate(minMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(minMoment.format("YYYY-MM-DD"));
       } else {
-        setSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
       }
     } else {
-      setSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+      onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
     }
     toggleYearView();
     setHasChanged(true);
@@ -552,6 +559,7 @@ DatePicker.propTypes = {
   disabledDateColor: PropTypes.string,
   selectedDateColor: PropTypes.string,
   fontFamily: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 export default memo(DatePicker);
