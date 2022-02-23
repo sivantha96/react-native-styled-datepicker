@@ -1,4 +1,3 @@
-
 import moment from "moment";
 
 export const getDateInfo = (givenDate) => {
@@ -29,9 +28,9 @@ export const getYearArray = (selectedDate) => {
 
 export const dateProp = (props, propName, componentName) => {
   if (!props[propName]) {
-    return
+    return;
   }
   if (!/\d{4}\-\d{2}-\d{2}/.test(props[propName])) {
     return new Error("Invalid prop `" + propName + "` supplied to" + " `" + componentName + "`. Validation failed.");
   }
-},
+};

@@ -9,10 +9,10 @@ import { getDateInfo, getInitialDate, getYearArray, dateProp } from "./func";
 
 /**
  *
- * @param {DateTime} initialViewDate - initial month to show
- * @param {DateTime} initialSelectedDate - currently selected date - format YYYY-MM-DD
- * @param {DateTime} minDate - minimum date can be selected
- * @param {DateTime} maxDate - maximum date can be selected
+ * @param {string} initialViewDate - initial month to show
+ * @param {string} initialSelectedDate - currently selected date - format YYYY-MM-DD
+ * @param {string} minDate - minimum date can be selected
+ * @param {string} maxDate - maximum date can be selected
  * @param {ViewStyle} selectedDateStyles - styles for the selected date
  * @param {ViewStyle} calendarHeaderTextStyles - styles for the calendar header text
  * @param {ViewStyle} calendarHeaderWrapperStyles - styles for the calendar header wrapper button
@@ -25,14 +25,14 @@ import { getDateInfo, getInitialDate, getYearArray, dateProp } from "./func";
  * @param {ViewStyle} monthTextStyles - styles for month text in month selection
  * @param {ViewStyle} yearWrapperStyles - styles for year container in year selection
  * @param {ViewStyle} yearTextStyles - styles for year text in year selection
- * @param {String} todayDateColor - color of the today's date text
- * @param {String} weekendDateColor - color of the weekend's date text
- * @param {String} weekDateColor - color of the weekday's date text
- * @param {String} disabledDateColor - color of a disabled date text
- * @param {String} selectedDateColor - color of a selected date text
- * @param {String} fontFamily - font family to apply for all text inside the calendar
+ * @param {string} todayDateColor - color of the today's date text
+ * @param {string} weekendDateColor - color of the weekend's date text
+ * @param {string} weekDateColor - color of the weekday's date text
+ * @param {string} disabledDateColor - color of a disabled date text
+ * @param {string} selectedDateColor - color of a selected date text
+ * @param {string} fontFamily - font family to apply for all text inside the calendar
  * @param {Function} onChange - callback to execute when the selected date changed
- * @returns Bottomsheet for the date selection
+ * @returns Datepicker component
  */
 const DatePicker = ({
   initialViewDate,
@@ -84,9 +84,9 @@ const DatePicker = ({
   };
 
   onChangeSelectedDate = (date) => {
-    onChange?.(date)
-    setSelectedDate(date)
-  }
+    onChange?.(date);
+    setSelectedDate(date);
+  };
 
   const toggleMonthView = () => {
     if (isMonthView) {
@@ -402,8 +402,8 @@ const DatePicker = ({
         <Animated.View style={{ opacity: calendarOpacity, position: "absolute", width: "100%" }}>
           <Calendar
             current={initialDate}
-            maxDate={maxDate ? maxDate.format("YYYY-MM-DD") : undefined}
-            minDate={minDate ? minDate?.format("YYYY-MM-DD") : undefined}
+            maxDate={maxDate ? maxMoment.format("YYYY-MM-DD") : undefined}
+            minDate={minDate ? minMoment?.format("YYYY-MM-DD") : undefined}
             firstDay={1} // starts from monday
             renderHeader={renderCalendarHeader}
             dayComponent={renderCalendarDate}
@@ -537,28 +537,51 @@ const styles = StyleSheet.create({
 });
 
 DatePicker.propTypes = {
+  /** Any date of the initial month to be shown. Must be in YYYY-MM-DD string format */
   initialViewDate: dateProp,
+  /** Date to be selected initially. Must be in YYYY-MM-DD string format */
   initialSelectedDate: dateProp,
+  /** Minimum date that can be selected. Must be in YYYY-MM-DD string format */
   minDate: dateProp,
+  /** Maximum date that can be selected. Must be in YYYY-MM-DD string format */
   maxDate: dateProp,
+  /** Styles for the selected date */
   selectedDateStyles: PropTypes.object,
+  /** Styles for the calendar header text */
   calendarHeaderTextStyles: PropTypes.object,
+  /** Styles for the calendar header wrapper button */
   calendarHeaderWrapperStyles: PropTypes.object,
+  /** Styles for weekend date which is in the valid date range */
   validWeekendDateStyles: PropTypes.object,
+  /** Styles for weekday date which is in the valid date range */
   validWeekDateStyles: PropTypes.object,
+  /** Styles for a date which is outside the valid date range */
   disabledDateStyles: PropTypes.object,
+  /** Styles for arrow wrapper */
   arrowWrapperStyles: PropTypes.object,
+  /** Styles for arrow */
   arrowStyles: PropTypes.object,
+  /** Styles for month container in month selection */
   monthWrapperStyles: PropTypes.object,
+  /** Styles for month text in month selection */
   monthTextStyles: PropTypes.object,
+  /** Styles for year container in year selection */
   yearWrapperStyles: PropTypes.object,
+  /** Styles for year text in year selection */
   yearTextStyles: PropTypes.object,
+  /** Color of the today's date text */
   todayDateColor: PropTypes.string,
+  /** Color of the weekend's date text */
   weekendDateColor: PropTypes.string,
+  /** Color of the weekday's date text */
   weekDateColor: PropTypes.string,
+  /** Color of a disabled date text */
   disabledDateColor: PropTypes.string,
+  /** Color of a selected date text */
   selectedDateColor: PropTypes.string,
+  /** Font family to apply for all text inside the calendar */
   fontFamily: PropTypes.string,
+  /** Callback function to execute when the selected date changed */
   onChange: PropTypes.func,
 };
 

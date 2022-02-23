@@ -36,21 +36,22 @@ All the dates should be in `YYYY-MM-DD` string format
 | `initialSelectedDate`          | `string`  | Date to be selected initially                                |
 | `minDate`                      | `string`  | Minimum date that can be selected                            |
 | `maxDate`                      | `string`  | Maximum date that can be selected                            |
-| `selectedDateStyles`           | `object`  | Styles for the selected date                                 |
-| `calendarHeaderTextStyles`     | `object`  | Styles for the calendar header text                          |
-| `calendarHeaderWrapperStyles`  | `object`  | Styles for the calendar header wrapper button                |
-| `validWeekendDateStyles`       | `object`  | Styles for weekend date which is in the valid date range     |
-| `validWeekDateStyles`          | `object`  | Styles for weekday date which is in the valid date range     |
-| `disabledDateStyles`           | `object`  | Styles for a date which is outside the valid date range      |
-| `arrowWrapperStyles`           | `object`  | Styles for arrow wrapper                                     |
-| `arrowStyles`                  | `object`  | Styles for arrow                                             |
-| `monthWrapperStyles`           | `object`  | Styles for month container in month selection                |
-| `monthTextStyles`              | `object`  | Styles for month text in month selection                     |
-| `yearWrapperStyles`            | `object`  | Styles for year container in year selection                  |
-| `yearTextStyles`               | `object`  | Styles for year text in year selection                       |
+| `selectedDateStyles`           | `Object`  | Styles for the selected date                                 |
+| `calendarHeaderTextStyles`     | `Object`  | Styles for the calendar header text                          |
+| `calendarHeaderWrapperStyles`  | `Object`  | Styles for the calendar header wrapper button                |
+| `validWeekendDateStyles`       | `Object`  | Styles for weekend date which is in the valid date range     |
+| `validWeekDateStyles`          | `Object`  | Styles for weekday date which is in the valid date range     |
+| `disabledDateStyles`           | `Object`  | Styles for a date which is outside the valid date range      |
+| `arrowWrapperStyles`           | `Object`  | Styles for arrow wrapper                                     |
+| `arrowStyles`                  | `Object`  | Styles for arrow                                             |
+| `monthWrapperStyles`           | `Object`  | Styles for month container in month selection                |
+| `monthTextStyles`              | `Object`  | Styles for month text in month selection                     |
+| `yearWrapperStyles`            | `Object`  | Styles for year container in year selection                  |
+| `yearTextStyles`               | `Object`  | Styles for year text in year selection                       |
 | `todayDateColor`               | `string`  | Color of the today's date text                               |
 | `weekendDateColor`             | `string`  | Color of the weekend's date text                             |
 | `weekDateColor`                | `string`  | Color of the weekday's date text                             |
 | `disabledDateColor`            | `string`  | Color of a disabled date text                                |
 | `selectedDateColor`            | `string`  | Color of a selected date text                                |
 | `fontFamily`                   | `string`  | Font family to apply for all text inside the calendar        |
+| `onChange`                     | `Function`| Callback function to execute when the selected date changed  |
