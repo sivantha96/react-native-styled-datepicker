@@ -4,6 +4,8 @@ Datepicker with a Calendar View, Month Selection view and Year Selection view.
 
 Built on top of the Calendar of [react-native-calendars](https://github.com/wix/react-native-calendars)
 
+![React Native Styled Datepicker](./src/assets/gif/readme.gif)
+
 ## Getting started
 
 ```bash
