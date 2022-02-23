@@ -22,9 +22,13 @@ import { getDateInfo, getInitialDate, getYearArray, dateProp } from "./func";
  * @param {ViewStyle} arrowWrapperStyles - styles for arrow wrapper
  * @param {ViewStyle} arrowStyles - styles for arrow
  * @param {ViewStyle} monthWrapperStyles - styles for month container in month selection
+ * @param {ViewStyle} selectedMonthWrapperStyles - styles for selected month container in month selection
  * @param {ViewStyle} monthTextStyles - styles for month text in month selection
+ * @param {ViewStyle} selectedMonthTextStyles - styles for selected month text in month selection
  * @param {ViewStyle} yearWrapperStyles - styles for year container in year selection
  * @param {ViewStyle} yearTextStyles - styles for year text in year selection
+ * @param {ViewStyle} selectedYearWrapperStyles - styles for selected year container in year selection
+ * @param {ViewStyle} selectedYearTextStyles - styles for selected year text in year selection
  * @param {string} todayDateColor - color of the today's date text
  * @param {string} weekendDateColor - color of the weekend's date text
  * @param {string} weekDateColor - color of the weekday's date text
@@ -47,9 +51,13 @@ const DatePicker = ({
   arrowWrapperStyles = {},
   arrowStyles = {},
   monthWrapperStyles = {},
+  selectedMonthWrapperStyles = {},
   monthTextStyles = {},
+  selectedMonthTextStyles = {},
   yearWrapperStyles = {},
   yearTextStyles = {},
+  selectedYearWrapperStyles = {},
+  selectedYearTextStyles = {},
   selectedDateStyles = {},
   calendarHeaderTextStyles = {},
   calendarHeaderWrapperStyles = {},
@@ -238,10 +246,10 @@ const DatePicker = ({
       <View style={{ width: "33%", height: "100%", alignItems: "center" }}>
         <TouchableOpacity
           disabled={isDisabled}
-          style={[styles.monthYear(isSelected, isDisabled), monthWrapperStyles]}
+          style={[styles.monthYear(isSelected, isDisabled, selectedMonthWrapperStyles), monthWrapperStyles]}
           onPress={() => onSelectMonth(index)}
         >
-          <Text style={[styles.monthYearText(isSelected, isDisabled), sharedTextStyles, monthTextStyles]}>{item}</Text>
+          <Text style={[styles.monthYearText(isSelected, isDisabled, selectedMonthTextStyles), sharedTextStyles, monthTextStyles]}>{item}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -263,10 +271,10 @@ const DatePicker = ({
       <View style={{ width: "25%", height: "100%", alignItems: "center" }}>
         <TouchableOpacity
           disabled={isDisabled}
-          style={[styles.monthYear(isSelected, isDisabled), yearWrapperStyles]}
+          style={[styles.monthYear(isSelected, isDisabled, selectedYearWrapperStyles), yearWrapperStyles]}
           onPress={() => onSelectYear(item)}
         >
-          <Text style={[styles.monthYearText(isSelected, isDisabled), sharedTextStyles, yearTextStyles]}>{item}</Text>
+          <Text style={[styles.monthYearText(isSelected, isDisabled, selectedYearTextStyles), sharedTextStyles, yearTextStyles]}>{item}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -520,14 +528,16 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 10,
   },
-  monthYear: (isSelected, isDisabled) => ({
+  monthYear: (isSelected, isDisabled, selectedStyles) => ({
     backgroundColor: isDisabled || !isSelected ? "#ffffff" : "green",
     borderRadius: 10,
+    ...(isSelected ? selectedStyles : {}),
   }),
-  monthYearText: (isSelected, isDisabled) => ({
+  monthYearText: (isSelected, isDisabled, selectedStyles) => ({
     color: isDisabled ? "#eeeeee" : isSelected ? "#ffffff" : "#000000",
     paddingVertical: 8,
     paddingHorizontal: 15,
+    ...(isSelected ? selectedStyles : {}),
   }),
   row: {
     flexDirection: "row",
@@ -563,12 +573,20 @@ DatePicker.propTypes = {
   arrowStyles: PropTypes.object,
   /** Styles for month container in month selection */
   monthWrapperStyles: PropTypes.object,
+  /** Styles for selected month container in month selection */
+  selectedMonthWrapperStyles: PropTypes.object,
   /** Styles for month text in month selection */
   monthTextStyles: PropTypes.object,
+  /** Styles for selected month text in month selection */
+  selectedMonthTextStyles: PropTypes.object,
   /** Styles for year container in year selection */
   yearWrapperStyles: PropTypes.object,
   /** Styles for year text in year selection */
   yearTextStyles: PropTypes.object,
+  /** Styles for selected year container in year selection */
+  selectedYearWrapperStyles: PropTypes.object,
+  /** Styles for selected year text in year selection */
+  selectedYearTextStyles: PropTypes.object,
   /** Color of the today's date text */
   todayDateColor: PropTypes.string,
   /** Color of the weekend's date text */

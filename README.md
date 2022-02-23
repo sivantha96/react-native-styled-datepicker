@@ -48,6 +48,10 @@ All the dates should be in `YYYY-MM-DD` string format
 | `monthTextStyles`              | `Object`  | Styles for month text in month selection                     |
 | `yearWrapperStyles`            | `Object`  | Styles for year container in year selection                  |
 | `yearTextStyles`               | `Object`  | Styles for year text in year selection                       |
+| `selectedMonthWrapperStyles`   | `Object`  | Styles for selected month container in month selection       |
+| `selectedMonthTextStyles`      | `Object`  | Styles for selected month text in month selection            |
+| `selectedYearWrapperStyles`    | `Object`  | Styles for selected year container in year selection         |
+| `selectedYearTextStyles`       | `Object`  | Styles for selected year text in year selection              |
 | `todayDateColor`               | `string`  | Color of the today's date text                               |
 | `weekendDateColor`             | `string`  | Color of the weekend's date text                             |
 | `weekDateColor`                | `string`  | Color of the weekday's date text                             |
