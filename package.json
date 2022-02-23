@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bugs": {
+    "url": "https://github.com/sivantha96/react-native-styled-datepicker/issues"
+  },
   "dependencies": {
     "moment": "^2.29.1",
     "prop-types": "15.5.10",
@@ -20,6 +23,10 @@
     "date",
     "picker"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sivantha96/react-native-styled-datepicker.git"
+  },
   "author": "Sivantha Paranavithana",
   "license": "ISC"
 }
