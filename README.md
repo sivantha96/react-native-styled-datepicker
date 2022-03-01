@@ -1,6 +1,8 @@
 # React Native Styled Datepicker
 
-Datepicker with a Calendar View, Month Selection view and Year Selection view.
+A Datepicker you can style as you wish 🚀
+
+Has a Calendar View, Month Selection view and Year Selection view.
 
 Built on top of the Calendar of [react-native-calendars](https://github.com/wix/react-native-calendars)
 
@@ -17,10 +19,6 @@ or
 ```bash
 yarn add react-native-styled-datepicker
 ```
-
-#### RN >= 0.60
-
-If you are using RN >= 0.60, only run `npx pod-install`. Then rebuild your project.
 
 ## General Usage
 
