@@ -11,12 +11,11 @@
   },
   "dependencies": {
     "moment": "^2.29.1",
-    "prop-types": "15.5.10",
-    "react-native-calendars": "^1.1278.0"
+    "react-native-calendars": "^1.1294.0"
   },
   "peerDependencies": {
-    "react": "^16.0.0-beta.5",
-    "react-native": "^0.49.1"
+    "react": "^18.1.0",
+    "react-native": "^0.70.6"
   },
   "keywords": [
     "datepicker",
