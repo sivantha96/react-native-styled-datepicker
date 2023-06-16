@@ -55,6 +55,7 @@ All the dates should be in `YYYY-MM-DD` string format
 | `todayDateColor`               | `string`  | Color of the today's date text                               |
 | `weekendDateColor`             | `string`  | Color of the weekend's date text                             |
 | `weekDateColor`                | `string`  | Color of the weekday's date text                             |
+| `weekHeadersColor`             | `string`  | color of the week headers text                               |
 | `disabledDateColor`            | `string`  | Color of a disabled date text                                |
 | `selectedDateColor`            | `string`  | Color of a selected date text                                |
 | `fontFamily`                   | `string`  | Font family to apply for all text inside the calendar        |

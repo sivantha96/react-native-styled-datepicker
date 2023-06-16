@@ -39,6 +39,7 @@ import { getDateInfo, getInitialDate, getYearArray, dateProp } from "./func";
  * @param {string} todayDateColor - color of the today's date text
  * @param {string} weekendDateColor - color of the weekend's date text
  * @param {string} weekDateColor - color of the weekday's date text
+ * @param {string} weekHeadersColor - color of the week headers text
  * @param {string} disabledDateColor - color of a disabled date text
  * @param {string} selectedDateColor - color of a selected date text
  * @param {string} fontFamily - font family to apply for all text inside the calendar
@@ -55,6 +56,7 @@ const DatePicker = ({
   weekDateColor,
   disabledDateColor,
   selectedDateColor,
+  weekHeadersColor,
   arrowWrapperStyles = {},
   arrowStyles = {},
   monthWrapperStyles = {},
@@ -590,7 +592,7 @@ const DatePicker = ({
             renderArrow={renderCalendarArrow}
             theme={{
               calendarBackground: "transparent",
-              textSectionTitleColor: "#000000",
+              textSectionTitleColor: weekHeadersColor || "#000000",
               textDayHeaderFontFamily: fontFamily,
             }}
           />
