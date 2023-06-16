@@ -333,12 +333,12 @@ const DatePicker = ({
         <TouchableOpacity
           disabled={isDisabled}
           style={[
+            monthWrapperStyles,
             styles.monthYear(
               isSelected,
               isDisabled,
               selectedMonthWrapperStyles
             ),
-            monthWrapperStyles,
           ]}
           onPress={() => onSelectMonth(index)}
         >
@@ -382,8 +382,8 @@ const DatePicker = ({
         <TouchableOpacity
           disabled={isDisabled}
           style={[
-            styles.monthYear(isSelected, isDisabled, selectedYearWrapperStyles),
             yearWrapperStyles,
+            styles.monthYear(isSelected, isDisabled, selectedYearWrapperStyles),
           ]}
           onPress={() => onSelectYear(item)}
         >
