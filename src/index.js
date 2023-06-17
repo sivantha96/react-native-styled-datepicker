@@ -603,7 +603,7 @@ const DatePicker = ({
           style={{ opacity: monthOpacity, position: "absolute", width: "100%" }}
         >
           <FlatList
-            data={MONTHS}
+            data={moment()?.localeData()?.monthsShort() || MONTHS}
             numColumns={3}
             keyExtractor={(item, index) => index.toString()}
             renderItem={renderCalendarMonth}
