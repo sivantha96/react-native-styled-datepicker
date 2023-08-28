@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from 'react';
 import {
   Animated,
   FlatList,
@@ -7,12 +7,51 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
-import { Calendar } from "react-native-calendars";
-import moment from "moment";
-import { Images } from "./assets";
-import { CALENDAR_STATES, MONTHS } from "./constants";
-import { getDateInfo, getInitialDate, getYearArray, dateProp } from "./func";
+  type TextStyle,
+  type ViewStyle,
+  type ImageStyle,
+} from 'react-native';
+import { Calendar } from 'react-native-calendars';
+import moment from 'moment';
+import { Images } from './assets';
+import { CALENDAR_STATES, MONTHS } from './constants';
+import { getDateInfo, getInitialDate, getYearArray } from './utils';
+
+type DatePickerProps = {
+  initialViewDate: string;
+  initialSelectedDate?: string;
+  minDate?: string;
+  maxDate?: string;
+
+  todayDateColor?: string;
+  weekendDateColor?: string;
+  weekDateColor?: string;
+  disabledDateColor?: string;
+  selectedDateColor?: string;
+  weekHeadersColor?: string;
+
+  fontFamily?: string;
+
+  arrowWrapperStyles?: ViewStyle;
+  arrowStyles?: ImageStyle;
+  monthWrapperStyles?: ViewStyle;
+  selectedMonthWrapperStyles?: ViewStyle;
+  selectedMonthTextStyles?: ViewStyle;
+  yearWrapperStyles?: ViewStyle;
+  selectedYearWrapperStyles?: ViewStyle;
+  selectedDateStyles?: ViewStyle;
+  calendarHeaderWrapperStyles?: ViewStyle;
+  validWeekendDateStyles?: ViewStyle;
+  validWeekDateStyles?: ViewStyle;
+  disabledDateStyles?: ViewStyle;
+
+  monthTextStyles?: TextStyle;
+  yearTextStyles?: TextStyle;
+  calendarHeaderTextStyles?: TextStyle;
+  selectedYearTextStyles?: TextStyle;
+
+  onChange: (date: string) => void;
+};
 
 /**
  *
@@ -45,54 +84,58 @@ import { getDateInfo, getInitialDate, getYearArray, dateProp } from "./func";
  * @param {string} fontFamily - font family to apply for all text inside the calendar
  * @param {Function} onChange - callback to execute when the selected date changed
  * @returns Datepicker component
+ *
  */
-const DatePicker = ({
-  initialViewDate,
-  initialSelectedDate,
-  minDate,
-  maxDate,
-  todayDateColor,
-  weekendDateColor,
-  weekDateColor,
-  disabledDateColor,
-  selectedDateColor,
-  weekHeadersColor,
-  arrowWrapperStyles = {},
-  arrowStyles = {},
-  monthWrapperStyles = {},
-  selectedMonthWrapperStyles = {},
-  monthTextStyles = {},
-  selectedMonthTextStyles = {},
-  yearWrapperStyles = {},
-  yearTextStyles = {},
-  selectedYearWrapperStyles = {},
-  selectedYearTextStyles = {},
-  selectedDateStyles = {},
-  calendarHeaderTextStyles = {},
-  calendarHeaderWrapperStyles = {},
-  validWeekendDateStyles = {},
-  validWeekDateStyles = {},
-  disabledDateStyles = {},
-  fontFamily,
-  onChange,
-}) => {
+const DatePicker = (props: DatePickerProps) => {
+  const {
+    initialViewDate,
+    initialSelectedDate,
+    minDate,
+    maxDate,
+    todayDateColor,
+    weekendDateColor,
+    weekDateColor,
+    disabledDateColor,
+    selectedDateColor,
+    weekHeadersColor,
+    arrowWrapperStyles = {},
+    arrowStyles = {},
+    monthWrapperStyles = {},
+    selectedMonthWrapperStyles = {},
+    monthTextStyles = {},
+    selectedMonthTextStyles = {},
+    yearWrapperStyles = {},
+    yearTextStyles = {},
+    selectedYearWrapperStyles = {},
+    selectedYearTextStyles = {},
+    selectedDateStyles = {},
+    calendarHeaderTextStyles = {},
+    calendarHeaderWrapperStyles = {},
+    validWeekendDateStyles = {},
+    validWeekDateStyles = {},
+    disabledDateStyles = {},
+    fontFamily,
+    onChange,
+  } = props;
   const [selectedDate, setSelectedDate] = useState(
-    initialSelectedDate || moment().format("YYYY-MM-DD")
+    initialSelectedDate || moment().format('YYYY-MM-DD')
   );
   const [isMonthView, setMonthView] = useState(false);
   const [isYearView, setYearView] = useState(false);
   const [isCalendarView, setCalendarView] = useState(true);
   const [hasChanged, setHasChanged] = useState(false);
-  const [yearArray, setYearArray] = useState([]);
+  const [yearArray, setYearArray] = useState<number[]>([]);
 
   const selectedDateInfo = useMemo(
     () => getDateInfo(selectedDate),
     [selectedDate]
   );
+
   const initialDate = useMemo(
     () => getInitialDate(selectedDate, initialViewDate, hasChanged),
-    [selectedDate, initialViewDate]
+    [selectedDate, initialViewDate, hasChanged]
   );
+
   useMemo(() => {
     setYearArray(getYearArray(selectedDate));
   }, [selectedDate]);
@@ -108,7 +151,7 @@ const DatePicker = ({
     fontFamily,
   };
 
-  const onChangeSelectedDate = (date) => {
+  const onChangeSelectedDate = (date: string) => {
     onChange?.(date);
     setSelectedDate(date);
   };
@@ -179,7 +222,7 @@ const DatePicker = ({
     }
   };
 
-  const renderCalendarHeader = (date) => {
+  const renderCalendarHeader = (date: any) => {
     return (
       <View style={styles.calendarHeaderContainer}>
         <TouchableOpacity
@@ -193,7 +236,7 @@ const DatePicker = ({
               sharedTextStyles,
             ]}
           >
-            {moment(new Date(date)).format("MMMM")}
+            {moment(new Date(date)).format('MMMM')}
           </Text>
         </TouchableOpacity>
 
@@ -208,14 +251,17 @@ const DatePicker = ({
               sharedTextStyles,
             ]}
           >
-            {moment(new Date(date)).format("YYYY")}
+            {moment(new Date(date)).format('YYYY')}
           </Text>
         </TouchableOpacity>
       </View>
     );
   };
 
-  const calendarDayContainerStyle = (date, state) => {
+  const calendarDayContainerStyle = (
+    date: any,
+    state: CALENDAR_STATES
+  ): ViewStyle => {
     const dayOfWeek = new Date(date.dateString).getDay();
     switch (true) {
       case selectedDate === date.dateString:
@@ -224,7 +270,7 @@ const DatePicker = ({
           ...styles.greenDayContainer,
           ...sharedContainerStyles,
           ...selectedDateStyles,
-        };
+        } as ViewStyle;
 
       case state === CALENDAR_STATES.DISABLED:
         // if the date is disabled
@@ -232,7 +278,7 @@ const DatePicker = ({
           ...styles.noBackgroundDayContainer,
           ...sharedContainerStyles,
           ...disabledDateStyles,
-        };
+        } as ViewStyle;
 
       case dayOfWeek === 6:
       case dayOfWeek === 0:
@@ -241,7 +287,7 @@ const DatePicker = ({
           ...styles.noBackgroundDayContainer,
           ...sharedContainerStyles,
           ...validWeekendDateStyles,
-        };
+        } as ViewStyle;
 
       default:
         // if the date is in valid range and a weekday
@@ -249,11 +295,11 @@ const DatePicker = ({
           ...styles.whiteDayContainer,
           ...sharedContainerStyles,
           ...validWeekDateStyles,
-        };
+        } as ViewStyle;
     }
   };
 
-  const calendarDayTextStyle = (date, state) => {
+  const calendarDayTextStyle = (date: any, state: CALENDAR_STATES) => {
     const dayOfWeek = new Date(date.dateString).getDay();
     switch (true) {
       case selectedDate === date.dateString:
@@ -283,7 +329,13 @@ const DatePicker = ({
     }
   };
 
-  const renderCalendarDate = ({ date, state }) => {
+  const renderCalendarDate = ({
+    date,
+    state,
+  }: {
+    date: any;
+    state: CALENDAR_STATES;
+  }) => {
     return (
       <TouchableOpacity
         disabled={state === CALENDAR_STATES.DISABLED}
@@ -299,19 +351,25 @@ const DatePicker = ({
     );
   };
 
-  const renderCalendarArrow = (direction) => {
+  const renderCalendarArrow = (direction: 'left' | 'right') => {
     return (
       <View style={[styles.calendarArrowContainer, arrowWrapperStyles]}>
         <Image
           resizeMode="contain"
           source={Images.ic_chevron}
-          style={[styles.calendarArrow(direction), arrowStyles]}
+          style={[variableStyles.calendarArrow(direction), arrowStyles]}
         />
       </View>
     );
   };
 
-  const renderCalendarMonth = ({ item, index }) => {
+  const renderCalendarMonth = ({
+    item,
+    index,
+  }: {
+    item: string;
+    index: number;
+  }) => {
     const isSelected = index === selectedDateInfo.month;
     const monthMoment = moment({
       year: selectedDateInfo.year,
@@ -329,12 +387,12 @@ const DatePicker = ({
       isDisabled = monthMoment.isBefore(minMoment);
     }
     return (
-      <View style={{ width: "33%", height: "100%", alignItems: "center" }}>
+      <View style={styles.monthStyle}>
         <TouchableOpacity
           disabled={isDisabled}
           style={[
             monthWrapperStyles,
-            styles.monthYear(
+            variableStyles.monthYear(
               isSelected,
               isDisabled,
               selectedMonthWrapperStyles
@@ -344,7 +402,7 @@ const DatePicker = ({
         >
           <Text
             style={[
-              styles.monthYearText(
+              variableStyles.monthYearText(
                 isSelected,
                 isDisabled,
                 selectedMonthTextStyles
@@ -360,7 +418,7 @@ const DatePicker = ({
     );
   };
 
-  const renderCalendarYear = ({ item }) => {
+  const renderCalendarYear = ({ item }: { item: number }) => {
     const isSelected = item === selectedDateInfo.year;
     const yearMoment = moment({
       year: item,
@@ -378,18 +436,22 @@ const DatePicker = ({
       isDisabled = yearMoment.isBefore(minMoment);
     }
     return (
-      <View style={{ width: "25%", height: "100%", alignItems: "center" }}>
+      <View style={styles.yearStyle}>
         <TouchableOpacity
           disabled={isDisabled}
           style={[
             yearWrapperStyles,
-            styles.monthYear(isSelected, isDisabled, selectedYearWrapperStyles),
+            variableStyles.monthYear(
+              isSelected,
+              isDisabled,
+              selectedYearWrapperStyles
+            ),
           ]}
           onPress={() => onSelectYear(item)}
         >
           <Text
             style={[
-              styles.monthYearText(
+              variableStyles.monthYearText(
                 isSelected,
                 isDisabled,
                 selectedYearTextStyles
@@ -405,87 +467,92 @@ const DatePicker = ({
     );
   };
 
-  const onSelectMonth = (index) => {
+  const onSelectMonth = (index: number) => {
     const newSelectedMoment = moment({
       year: selectedDateInfo.year,
       month: index,
       date: 1,
-    }).endOf("month");
+    }).endOf('month');
     if (selectedDateInfo.date <= newSelectedMoment.date()) {
       newSelectedMoment.date(selectedDateInfo.date);
     }
     if (maxMoment && minMoment) {
       if (newSelectedMoment.isBefore(minMoment)) {
-        onChangeSelectedDate(minMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(minMoment.format('YYYY-MM-DD'));
       } else if (newSelectedMoment.isAfter(maxMoment)) {
-        onChangeSelectedDate(maxMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(maxMoment.format('YYYY-MM-DD'));
       } else {
-        onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(newSelectedMoment.format('YYYY-MM-DD'));
       }
     } else if (maxMoment) {
       if (newSelectedMoment.isAfter(maxMoment)) {
-        onChangeSelectedDate(maxMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(maxMoment.format('YYYY-MM-DD'));
       } else {
-        onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(newSelectedMoment.format('YYYY-MM-DD'));
       }
     } else if (minMoment) {
       if (newSelectedMoment.isBefore(minMoment)) {
-        onChangeSelectedDate(minMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(minMoment.format('YYYY-MM-DD'));
       } else {
-        onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(newSelectedMoment.format('YYYY-MM-DD'));
       }
     } else {
-      onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+      onChangeSelectedDate(newSelectedMoment.format('YYYY-MM-DD'));
     }
 
     toggleMonthView();
     setHasChanged(true);
   };
 
-  const onSelectYear = (item) => {
+  const onSelectYear = (item: number) => {
     const newSelectedMoment = moment({
       year: item,
       month: selectedDateInfo.month,
       date: 1,
-    }).endOf("month");
+    }).endOf('month');
     if (selectedDateInfo.date <= newSelectedMoment.date()) {
       newSelectedMoment.date(selectedDateInfo.date);
     }
     if (maxMoment && minMoment) {
       if (newSelectedMoment.isBefore(minMoment)) {
-        onChangeSelectedDate(minMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(minMoment.format('YYYY-MM-DD'));
       } else if (newSelectedMoment.isAfter(maxMoment)) {
-        onChangeSelectedDate(maxMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(maxMoment.format('YYYY-MM-DD'));
       } else {
-        onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(newSelectedMoment.format('YYYY-MM-DD'));
       }
     } else if (maxMoment) {
       if (newSelectedMoment.isAfter(maxMoment)) {
-        onChangeSelectedDate(maxMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(maxMoment.format('YYYY-MM-DD'));
       } else {
-        onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(newSelectedMoment.format('YYYY-MM-DD'));
       }
     } else if (minMoment) {
       if (newSelectedMoment.isBefore(minMoment)) {
-        onChangeSelectedDate(minMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(minMoment.format('YYYY-MM-DD'));
       } else {
-        onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+        onChangeSelectedDate(newSelectedMoment.format('YYYY-MM-DD'));
       }
     } else {
-      onChangeSelectedDate(newSelectedMoment.format("YYYY-MM-DD"));
+      onChangeSelectedDate(newSelectedMoment.format('YYYY-MM-DD'));
     }
     toggleYearView();
     setHasChanged(true);
   };
 
-  const onPressYearArrow = (direction) => {
-    if (direction === "left") {
-      setYearArray(Array.from({ length: 20 }, (_, i) => yearArray[0] - 20 + i));
+  const onPressYearArrow = (direction: 'left' | 'right') => {
+    if (direction === 'left') {
+      setYearArray(
+        Array.from(
+          { length: 20 },
+          (_, i) => (yearArray[0] ? yearArray[0] : 0) - 20 + i
+        )
+      );
     } else {
       setYearArray(
         Array.from(
           { length: 20 },
-          (_, i) => yearArray[yearArray.length - 1] + 1 + i
+          (_, i) => (yearArray[yearArray.length - 1] as any) + 1 + i
         )
       );
     }
@@ -497,17 +564,17 @@ const DatePicker = ({
       isLeftDisabled = true;
     } else if (minMoment) {
       const prevSetLastYearMoment = moment({
-        year: yearArray[0] - 1,
+        year: yearArray[0] ? yearArray[0] - 1 : 0,
         month: 11,
         date: 1,
-      }).endOf("month");
+      }).endOf('month');
       isLeftDisabled = prevSetLastYearMoment.isBefore(minMoment);
     }
 
     let isRightDisabled = false;
     if (maxMoment) {
       const nextSetLastFirstMoment = moment({
-        year: yearArray[yearArray.length - 1] + 1,
+        year: (yearArray[yearArray.length - 1] as any) + 1,
         month: 0,
         date: 1,
       });
@@ -518,16 +585,16 @@ const DatePicker = ({
       <View style={styles.row}>
         <TouchableOpacity
           disabled={isLeftDisabled}
-          onPress={() => onPressYearArrow("left")}
+          onPress={() => onPressYearArrow('left')}
           style={[styles.calendarArrowContainer, arrowWrapperStyles]}
         >
           <Image
             resizeMode="contain"
             source={Images.ic_chevron}
-            style={[styles.calendarArrow("left"), arrowStyles]}
+            style={[variableStyles.calendarArrow('left'), arrowStyles]}
           />
         </TouchableOpacity>
-        <View style={[styles.row, { marginHorizontal: 20 }]}>
+        <View style={[styles.row, styles.headerRow]}>
           <Text
             style={[
               styles.calendarHeader,
@@ -536,7 +603,7 @@ const DatePicker = ({
             ]}
           >
             {yearArray[0]}
-            {" - "}
+            {' - '}
           </Text>
           <Text
             style={[
@@ -550,13 +617,13 @@ const DatePicker = ({
         </View>
         <TouchableOpacity
           disabled={isRightDisabled}
-          onPress={() => onPressYearArrow("right")}
+          onPress={() => onPressYearArrow('right')}
           style={[styles.calendarArrowContainer, arrowWrapperStyles]}
         >
           <Image
             resizeMode="contain"
             source={Images.ic_chevron}
-            style={[styles.calendarArrow("right"), arrowStyles]}
+            style={[variableStyles.calendarArrow('right'), arrowStyles]}
           />
         </TouchableOpacity>
       </View>
@@ -564,35 +631,26 @@ const DatePicker = ({
   };
 
   return (
-    <View
-      style={{
-        position: "relative",
-        justifyContent: "center",
-        minHeight: 350,
-        width: "100%",
-        alignItems: "center",
-        padding: 10,
-      }}
-    >
+    <View style={styles.container}>
       {isCalendarView && (
         <Animated.View
           style={{
             opacity: calendarOpacity,
-            position: "absolute",
-            width: "100%",
+            position: 'absolute',
+            width: '100%',
           }}
         >
           <Calendar
             current={initialDate}
-            maxDate={maxDate ? maxMoment.format("YYYY-MM-DD") : undefined}
-            minDate={minDate ? minMoment?.format("YYYY-MM-DD") : undefined}
+            maxDate={maxDate ? maxMoment?.format('YYYY-MM-DD') : undefined}
+            minDate={minDate ? minMoment?.format('YYYY-MM-DD') : undefined}
             firstDay={1} // starts from monday
             renderHeader={renderCalendarHeader}
-            dayComponent={renderCalendarDate}
+            dayComponent={renderCalendarDate as any}
             renderArrow={renderCalendarArrow}
             theme={{
-              calendarBackground: "transparent",
-              textSectionTitleColor: weekHeadersColor || "#000000",
+              calendarBackground: 'transparent',
+              textSectionTitleColor: weekHeadersColor || '#000000',
               textDayHeaderFontFamily: fontFamily,
             }}
           />
@@ -600,21 +658,21 @@ const DatePicker = ({
       )}
       {isMonthView && (
         <Animated.View
-          style={{ opacity: monthOpacity, position: "absolute", width: "100%" }}
+          style={{ opacity: monthOpacity, position: 'absolute', width: '100%' }}
         >
           <FlatList
             data={moment()?.localeData()?.monthsShort() || MONTHS}
             numColumns={3}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(_item, index) => index.toString()}
             renderItem={renderCalendarMonth}
-            contentContainerStyle={{ width: "100%", height: "100%" }}
-            columnWrapperStyle={{ width: "100%", marginVertical: "3%" }}
+            contentContainerStyle={styles.contentContainerStyle}
+            columnWrapperStyle={styles.columnWrapperStyles}
           />
         </Animated.View>
       )}
       {isYearView && (
         <Animated.View
-          style={{ opacity: yearOpacity, position: "absolute", width: "100%" }}
+          style={{ opacity: yearOpacity, position: 'absolute', width: '100%' }}
         >
           {renderYearArrows()}
           <FlatList
@@ -622,8 +680,8 @@ const DatePicker = ({
             numColumns={4}
             keyExtractor={(item) => item.toString()}
             renderItem={renderCalendarYear}
-            contentContainerStyle={{ width: "100%", height: "100%" }}
-            columnWrapperStyle={{ width: "100%", marginVertical: "3%" }}
+            contentContainerStyle={styles.contentContainerStyle}
+            columnWrapperStyle={styles.columnWrapperStyles}
           />
         </Animated.View>
       )}
@@ -636,95 +694,135 @@ const sharedContainerStyles = {
   width: 35,
   borderWidth: 1,
   borderRadius: 10,
-  overflow: "hidden",
-  justifyContent: "center",
-  alignItems: "center",
+  overflow: 'hidden',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
+
+const variableStyles = {
+  calendarArrow: (direction: 'left' | 'right') => ({
+    tintColor: 'blue',
+    transform: [
+      { rotate: direction === 'left' ? '90deg' : '-90deg' },
+      { scale: 0.4 },
+    ],
+  }),
+  monthYear: (
+    isSelected: boolean,
+    isDisabled: boolean,
+    selectedStyles: TextStyle
+  ) => ({
+    backgroundColor: isDisabled || !isSelected ? '#ffffff' : 'green',
+    borderRadius: 10,
+    ...(isSelected ? selectedStyles : {}),
+  }),
+  monthYearText: (
+    isSelected: boolean,
+    isDisabled: boolean,
+    selectedStyles: TextStyle
+  ) => ({
+    color: isDisabled ? '#eeeeee' : isSelected ? '#ffffff' : '#000000',
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    ...(isSelected ? selectedStyles : {}),
+  }),
 };
 
 const styles = StyleSheet.create({
   calendarHeaderContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   calendarHeader: {
-    color: "black",
-    overflow: "hidden",
+    color: 'black',
+    overflow: 'hidden',
   },
   calendarHeaderWrapper: {
-    backgroundColor: "#ffffff",
-    borderColor: "#eeeeee",
+    backgroundColor: '#ffffff',
+    borderColor: '#eeeeee',
     paddingVertical: 8,
     marginHorizontal: 5,
     paddingHorizontal: 10,
     borderWidth: 1,
-    overflow: "hidden",
+    overflow: 'hidden',
     borderRadius: 10,
   },
   greenDayContainer: {
-    borderColor: "green",
-    backgroundColor: "green",
+    borderColor: 'green',
+    backgroundColor: 'green',
   },
   whiteDayContainer: {
-    borderColor: "#ffffff",
-    backgroundColor: "#ffffff",
+    borderColor: '#ffffff',
+    backgroundColor: '#ffffff',
   },
   noBackgroundDayContainer: {
-    borderColor: "transparent",
-    backgroundColor: "transparent",
+    borderColor: 'transparent',
+    backgroundColor: 'transparent',
   },
   whiteColor: {
-    color: "#ffffff",
+    color: '#ffffff',
   },
   redColor: {
-    color: "red",
+    color: 'red',
   },
   blackColor: {
-    color: "#000000",
+    color: '#000000',
   },
   disabledColor: {
-    color: "#eeeeee",
+    color: '#eeeeee',
   },
   primaryColor: {
-    color: "blue",
+    color: 'blue',
   },
   calendarArrowContainer: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginVertical: 10,
   },
-  calendarArrow: (direction) => ({
-    tintColor: "blue",
-    transform: [
-      { rotate: direction === "left" ? "90deg" : "-90deg" },
-      { scale: 0.4 },
-    ],
-  }),
   bottomButtonContainer: {
     marginTop: 15,
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    backgroundColor: "#ffffff",
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#ffffff',
   },
   bottomButton: {
     flex: 1,
     marginHorizontal: 10,
   },
-  monthYear: (isSelected, isDisabled, selectedStyles) => ({
-    backgroundColor: isDisabled || !isSelected ? "#ffffff" : "green",
-    borderRadius: 10,
-    ...(isSelected ? selectedStyles : {}),
-  }),
-  monthYearText: (isSelected, isDisabled, selectedStyles) => ({
-    color: isDisabled ? "#eeeeee" : isSelected ? "#ffffff" : "#000000",
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    ...(isSelected ? selectedStyles : {}),
-  }),
   row: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  contentContainerStyle: {
+    width: '100%',
+    height: '100%',
+  },
+  columnWrapperStyles: {
+    width: '100%',
+    marginVertical: '3%',
+  },
+  monthStyle: {
+    width: '33%',
+    height: '100%',
+    alignItems: 'center',
+  },
+  yearStyle: {
+    width: '25%',
+    height: '100%',
+    alignItems: 'center',
+  },
+  container: {
+    position: 'relative',
+    justifyContent: 'center',
+    minHeight: 350,
+    width: '100%',
+    alignItems: 'center',
+    padding: 10,
+  },
+  headerRow: {
+    marginHorizontal: 20,
   },
 });
 
-export default memo(DatePicker);
+export default DatePicker;

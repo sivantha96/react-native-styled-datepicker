@@ -1,62 +1,31 @@
-# React Native Styled Datepicker
+# react-native-styled-datepicker
 
-A Datepicker you can style as you wish 🚀
+A Datepicker you can style as you wish
 
-Has a Calendar View, Month Selection view and Year Selection view.
+## Installation
 
-Built on top of the Calendar of [react-native-calendars](https://github.com/wix/react-native-calendars)
-
-![React Native Styled Datepicker](https://media.giphy.com/media/WTezJS3IysrzxLYgh1/giphy.gif)
-
-## Getting started
-
-```bash
-npm install react-native-styled-datepicker --save
+```sh
+npm install react-native-styled-datepicker
 ```
 
-or
-
-```bash
-yarn add react-native-styled-datepicker
-```
-
-## General Usage
+## Usage
 
 ```js
-import DatePicker from "react-native-styled-datepicker";
+import { multiply } from 'react-native-styled-datepicker';
+
+// ...
+
+const result = await multiply(3, 7);
 ```
 
-## Props
+## Contributing
 
-All the dates should be in `YYYY-MM-DD` string format
+See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
-| Prop                           | Type      | Description                                                  |
-| ---------------------          | --------- | -------------------------------------------------------------|
-| `initialViewDate`              | `string`  | Any date of the initial month to be shown                    |
-| `initialSelectedDate`          | `string`  | Date to be selected initially                                |
-| `minDate`                      | `string`  | Minimum date that can be selected                            |
-| `maxDate`                      | `string`  | Maximum date that can be selected                            |
-| `selectedDateStyles`           | `Object`  | Styles for the selected date                                 |
-| `calendarHeaderTextStyles`     | `Object`  | Styles for the calendar header text                          |
-| `calendarHeaderWrapperStyles`  | `Object`  | Styles for the calendar header wrapper button                |
-| `validWeekendDateStyles`       | `Object`  | Styles for weekend date which is in the valid date range     |
-| `validWeekDateStyles`          | `Object`  | Styles for weekday date which is in the valid date range     |
-| `disabledDateStyles`           | `Object`  | Styles for a date which is outside the valid date range      |
-| `arrowWrapperStyles`           | `Object`  | Styles for arrow wrapper                                     |
-| `arrowStyles`                  | `Object`  | Styles for arrow                                             |
-| `monthWrapperStyles`           | `Object`  | Styles for month container in month selection                |
-| `monthTextStyles`              | `Object`  | Styles for month text in month selection                     |
-| `yearWrapperStyles`            | `Object`  | Styles for year container in year selection                  |
-| `yearTextStyles`               | `Object`  | Styles for year text in year selection                       |
-| `selectedMonthWrapperStyles`   | `Object`  | Styles for selected month container in month selection       |
-| `selectedMonthTextStyles`      | `Object`  | Styles for selected month text in month selection            |
-| `selectedYearWrapperStyles`    | `Object`  | Styles for selected year container in year selection         |
-| `selectedYearTextStyles`       | `Object`  | Styles for selected year text in year selection              |
-| `todayDateColor`               | `string`  | Color of the today's date text                               |
-| `weekendDateColor`             | `string`  | Color of the weekend's date text                             |
-| `weekDateColor`                | `string`  | Color of the weekday's date text                             |
-| `weekHeadersColor`             | `string`  | color of the week headers text                               |
-| `disabledDateColor`            | `string`  | Color of a disabled date text                                |
-| `selectedDateColor`            | `string`  | Color of a selected date text                                |
-| `fontFamily`                   | `string`  | Font family to apply for all text inside the calendar        |
-| `onChange`                     | `Function`| Callback function to execute when the selected date changed  |
+## License
+
+MIT
+
+---
+
+Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
