@@ -33,10 +33,8 @@ type DatePickerProps = {
   fontFamily?: string;
 
   arrowWrapperStyles?: ViewStyle;
-  arrowStyles?: ImageStyle;
   monthWrapperStyles?: ViewStyle;
   selectedMonthWrapperStyles?: ViewStyle;
-  selectedMonthTextStyles?: ViewStyle;
   yearWrapperStyles?: ViewStyle;
   selectedYearWrapperStyles?: ViewStyle;
   selectedDateStyles?: ViewStyle;
@@ -45,6 +43,9 @@ type DatePickerProps = {
   validWeekDateStyles?: ViewStyle;
   disabledDateStyles?: ViewStyle;
 
+  arrowStyles?: ImageStyle;
+
+  selectedMonthTextStyles?: TextStyle;
   monthTextStyles?: TextStyle;
   yearTextStyles?: TextStyle;
   calendarHeaderTextStyles?: TextStyle;
