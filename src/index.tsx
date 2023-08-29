@@ -119,7 +119,7 @@ const DatePicker = (props: DatePickerProps) => {
     onChange,
   } = props;
   const [selectedDate, setSelectedDate] = useState(
-    initialSelectedDate || moment().format('YYYY-MM-DD')
+    initialSelectedDate ?? moment().format('YYYY-MM-DD')
   );
   const [isMonthView, setMonthView] = useState(false);
   const [isYearView, setYearView] = useState(false);
@@ -640,11 +640,7 @@ const DatePicker = (props: DatePickerProps) => {
     <View style={styles.container}>
       {isCalendarView && (
         <Animated.View
-          style={{
-            opacity: calendarOpacity,
-            position: 'absolute',
-            width: '100%',
-          }}
+          style={variableStyles.calendarContainer(calendarOpacity)}
         >
           <Calendar
             current={initialDate}
@@ -656,16 +652,14 @@ const DatePicker = (props: DatePickerProps) => {
             renderArrow={renderCalendarArrow}
             theme={{
               calendarBackground: 'transparent',
-              textSectionTitleColor: weekHeadersColor || '#000000',
+              textSectionTitleColor: weekHeadersColor ?? '#000000',
               textDayHeaderFontFamily: fontFamily,
             }}
           />
         </Animated.View>
       )}
       {isMonthView && (
-        <Animated.View
-          style={{ opacity: monthOpacity, position: 'absolute', width: '100%' }}
-        >
+        <Animated.View style={variableStyles.monthContainer(monthOpacity)}>
           <FlatList
             data={moment()?.localeData()?.monthsShort() || MONTHS}
             numColumns={3}
@@ -677,9 +671,7 @@ const DatePicker = (props: DatePickerProps) => {
         </Animated.View>
       )}
       {isYearView && (
-        <Animated.View
-          style={{ opacity: yearOpacity, position: 'absolute', width: '100%' }}
-        >
+        <Animated.View style={variableStyles.yearContainer(yearOpacity)}>
           {renderYearArrows()}
           <FlatList
             data={yearArray}
@@ -732,6 +724,24 @@ const variableStyles = {
     paddingHorizontal: 15,
     ...(isSelected ? selectedStyles : {}),
   }),
+  monthContainer: (monthOpacity: Animated.Value) =>
+    ({
+      opacity: monthOpacity,
+      position: 'absolute',
+      width: '100%',
+    } as any),
+  yearContainer: (yearOpacity: Animated.Value) =>
+    ({
+      opacity: yearOpacity,
+      position: 'absolute',
+      width: '100%',
+    } as any),
+  calendarContainer: (calendarOpacity: Animated.Value) =>
+    ({
+      opacity: calendarOpacity,
+      position: 'absolute',
+      width: '100%',
+    } as any),
 };
 
 const styles = StyleSheet.create({
