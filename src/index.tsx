@@ -42,6 +42,7 @@ type DatePickerProps = {
   validWeekendDateStyles?: ViewStyle;
   validWeekDateStyles?: ViewStyle;
   disabledDateStyles?: ViewStyle;
+  contentContainerStyles?: ViewStyle;
 
   arrowStyles?: ImageStyle;
 
@@ -60,6 +61,7 @@ type DatePickerProps = {
  * @param {string} initialSelectedDate - currently selected date - format YYYY-MM-DD
  * @param {string} minDate - minimum date can be selected
  * @param {string} maxDate - maximum date can be selected
+ * @param {ViewStyle} contentContainerStyles - styles for the whole calendar container
  * @param {ViewStyle} selectedDateStyles - styles for the selected date
  * @param {ViewStyle} calendarHeaderTextStyles - styles for the calendar header text
  * @param {ViewStyle} calendarHeaderWrapperStyles - styles for the calendar header wrapper button
@@ -115,6 +117,7 @@ const DatePicker = (props: DatePickerProps) => {
     validWeekendDateStyles = {},
     validWeekDateStyles = {},
     disabledDateStyles = {},
+    contentContainerStyles = {},
     fontFamily,
     onChange,
   } = props;
@@ -637,7 +640,7 @@ const DatePicker = (props: DatePickerProps) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, contentContainerStyles]}>
       {isCalendarView && (
         <Animated.View
           style={variableStyles.calendarContainer(calendarOpacity)}
@@ -830,11 +833,12 @@ const styles = StyleSheet.create({
   },
   container: {
     position: 'relative',
-    justifyContent: 'center',
-    minHeight: 350,
+    justifyContent: 'flex-start',
+    minHeight: 400,
     width: '100%',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     padding: 10,
+    flexDirection: 'column',
   },
   headerRow: {
     marginHorizontal: 20,
