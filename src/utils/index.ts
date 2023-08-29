@@ -9,15 +9,19 @@ export const getDateInfo = (givenDate: string) => {
   };
 };
 
-export const getInitialDate = (
-  selectedDate: string,
-  initialDate: string,
-  hasChanged: boolean
-) => {
+export const getInitialDate = ({
+  selectedDate,
+  initialDate,
+  hasChanged,
+}: {
+  selectedDate: string;
+  initialDate?: string;
+  hasChanged: boolean;
+}) => {
   if (hasChanged) {
     return selectedDate;
   }
-  return initialDate || moment().format('YYYY-MM-DD');
+  return initialDate ?? moment().format('YYYY-MM-DD');
 };
 
 export const getYearArray = (selectedDate: string) => {

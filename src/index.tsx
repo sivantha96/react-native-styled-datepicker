@@ -18,7 +18,7 @@ import { CALENDAR_STATES, MONTHS } from './constants';
 import { getDateInfo, getInitialDate, getYearArray } from './utils';
 
 type DatePickerProps = {
-  initialViewDate: string;
+  initialViewDate?: string;
   initialSelectedDate?: string;
   minDate?: string;
   maxDate?: string;
@@ -133,7 +133,12 @@ const DatePicker = (props: DatePickerProps) => {
   );
 
   const initialDate = useMemo(
-    () => getInitialDate(selectedDate, initialViewDate, hasChanged),
+    () =>
+      getInitialDate({
+        selectedDate,
+        initialDate: initialViewDate,
+        hasChanged,
+      }),
     [selectedDate, initialViewDate, hasChanged]
   );
 
